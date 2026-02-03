@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฟอร์มบันทึกการเข้าพบลูกค้า</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .form-content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .required {
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radio-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .hotel-section {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #e8ebff;
+        }
+
+        .hotel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .hotel-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .add-name-section {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 2px dashed #f39c12;
+        }
+
+        .add-name-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .add-name-input input {
+            flex: 1;
+        }
+
+        .btn-add-name {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .btn-add-name:hover {
+            background: #e67e22;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            background: #2ecc71;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            display: none;
+        }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 0;
+            }
+
+            .form-content {
+                padding: 20px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .add-name-input {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 ฟอร์มบันทึกการเข้าพบลูกค้า</h1>
+            <p>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+        </div>
+
+        <div class="form-content">
+            <div class="error-message" id="errorMessage"></div>
+
+            <form id="salesForm">
+                <!-- Section 1: ข้อมูลเซล -->
+                <div class="section">
+                    <div class="section-title">
+                        👤 ข้อมูลเซล
+                    </div>
+
+                    <div class="form-group">
+                        <label>ชื่อเซล <span class="required">*</span></label>
+                        <select id="salesName" required>
+                            <option value="">-- เลือกชื่อเซล --</option>
+                            <option value="EARN">EARN</option>
+                            <option value="MILK">MILK</option>
+                            <option value="RIEAL">RIEAL</option>
+                            <option value="PANG">PANG</option>
+                            <option value="RUNG">RUNG</option>
+                            <option value="MOOK">MOOK</option>
+                            <option value="AE">AE</option>
+                        </select>
+                    </div>
+
+                    <div class="add-name-section">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <strong>➕ เพิ่มชื่อเซลใหม่</strong>
+                            <button type="button" class="btn-add-name" onclick="toggleAddNameInput()">
+                                เพิ่มชื่อ
+                            </button>
+                        </div>
+                        <div class="add-name-input hidden" id="addNameInput">
+                            <input type="text" id="newSalesName" placeholder="กรอกชื่อเซลใหม่">
+                            <button type="button" class="btn-add-name" onclick="addNewSalesName()">
+                                บันทึก
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>วันที่เข้าพบลูกค้า / วันที่ทำงานวันนี้ <span class="required">*</span></label>
+                        <input type="date" id="visitDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>สถานะการทำงานวันนี้ <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="noLeave" name="leaveType" value="ไม่ลา" required>
+                                <label for="noLeave">✅ ไม่ลา</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="sickLeave" name="leaveType" value="ลาป่วย">
+                                <label for="sickLeave">🤒 ลาป่วย</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="personalLeave" name="leaveType" value="ลากิจ">
+                                <label for="personalLeave">📌 ลากิจ</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="unpaidLeave" name="leaveType" value="ลาไม่รับเงิน">
+                                <label for="unpaidLeave">🚫 ลาไม่รับเงิน</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="businessLeave" name="leaveType" value="ลาธุระ">
+                                <label for="businessLeave">🧾 ลาธุระ</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>อีเมล <span class="required">*</span></label>
+                        <input type="email" id="email" required placeholder="example@email.com">
+                    </div>
+                </div>
+
+                <!-- Section 2: โรงแรม/สถานที่ -->
+                <div id="hotelsSection" class="section hidden">
+                    <div class="section-title">
+                        🏨 โรงแรม / สถานที่
+                    </div>
+                    <div id="hotelsList">
+                        <!-- Hotels will be added here dynamically -->
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="addHotel()">
+                            ➕ เพิ่มโรงแรม/สถานที่
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        📤 ส่งข้อมูล
+                    </button>
+                </div>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                ✅ บันทึกข้อมูลเรียบร้อยแล้ว!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - ใส่ Web App URL ของคุณที่นี่
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzM8_cKRZnXMPHg9Q2dt2EJAZR9xyWmDtWpIFIaWfO1jwavxUnh3g9dVgb9JwgOppIN/exec';
+        
+        let hotelCount = 0;
+
+        // Set today's date as default
+        document.getElementById('visitDate').valueAsDate = new Date();
+
+        // Listen to leave type changes
+        document.querySelectorAll('input[name="leaveType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const hotelsSection = document.getElementById('hotelsSection');
+                if (this.value === 'ไม่ลา') {
+                    hotelsSection.classList.remove('hidden');
+                    if (hotelCount === 0) {
+                        addHotel();
+                    }
+                } else {
+                    hotelsSection.classList.add('hidden');
+                }
+            });
+        });
+
+        function toggleAddNameInput() {
+            const input = document.getElementById('addNameInput');
+            input.classList.toggle('hidden');
+        }
+
+        function addNewSalesName() {
+            const newName = document.getElementById('newSalesName').value.trim();
+            if (newName) {
+                const select = document.getElementById('salesName');
+                const option = document.createElement('option');
+                option.value = newName.toUpperCase();
+                option.textContent = newName.toUpperCase();
+                select.appendChild(option);
+                select.value = newName.toUpperCase();
+                document.getElementById('newSalesName').value = '';
+                toggleAddNameInput();
+                alert(`เพิ่มชื่อ "${newName.toUpperCase()}" เรียบร้อยแล้ว`);
+            }
+        }
+
+        function addHotel() {
+            hotelCount++;
+            const hotelsList = document.getElementById('hotelsList');
+            
+            const hotelDiv = document.createElement('div');
+            hotelDiv.className = 'hotel-section';
+            hotelDiv.id = `hotel-${hotelCount}`;
+            
+            hotelDiv.innerHTML = `
+                <div class="hotel-header">
+                    <div class="hotel-number">🏨 โรงแรม/สถานที่ที่ ${hotelCount}</div>
+                    ${hotelCount > 1 ? `<button type="button" class="remove-btn" onclick="removeHotel(${hotelCount})">❌ ลบ</button>` : ''}
+                </div>
+                
+                <div class="form-group">
+                    <label>ชื่อโรงแรม / สถานที่ <span class="required">*</span></label>
+                    <input type="text" name="hotelName[]" required placeholder="ระบุชื่อโรงแรม/สถานที่">
+                </div>
+                
+                <div class="form-group">
+                    <label>เวลาเข้าพบ <span class="required">*</span></label>
+                    <input type="time" name="visitTime[]" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>ผู้ติดต่อ <span class="required">*</span></label>
+                    <input type="text" name="contactPerson[]" required placeholder="ชื่อผู้ติดต่อ">
+                </div>
+                
+                <div class="form-group">
+                    <label>วัตถุประสงค์ <span class="required">*</span></label>
+                    <textarea name="purpose[]" required placeholder="ระบุวัตถุประสงค์การเข้าพบ"></textarea>
+                </div>
+            `;
+            
+            hotelsList.appendChild(hotelDiv);
+        }
+
+        function removeHotel(id) {
+            const hotelDiv = document.getElementById(`hotel-${id}`);
+            if (hotelDiv) {
+                hotelDiv.remove();
+            }
+        }
+
+        // Form submission
+        document.getElementById('salesForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const leaveType = document.querySelector('input[name="leaveType"]:checked').value;
+            
+            // Collect form data
+            const formData = {
+                timestamp: new Date().toISOString(),
+                salesName: document.getElementById('salesName').value,
+                visitDate: document.getElementById('visitDate').value,
+                leaveType: leaveType,
+                email: document.getElementById('email').value,
+                hotels: []
+            };
+
+            // If not on leave, collect hotel data
+            if (leaveType === 'ไม่ลา') {
+                const hotelNames = document.querySelectorAll('input[name="hotelName[]"]');
+                const visitTimes = document.querySelectorAll('input[name="visitTime[]"]');
+                const contactPersons = document.querySelectorAll('input[name="contactPerson[]"]');
+                const purposes = document.querySelectorAll('textarea[name="purpose[]"]');
+
+                for (let i = 0; i < hotelNames.length; i++) {
+                    if (hotelNames[i].value.trim()) {
+                        formData.hotels.push({
+                            hotelName: hotelNames[i].value,
+                            visitTime: visitTimes[i].value,
+                            contactPerson: contactPersons[i].value,
+                            purpose: purposes[i].value
+                        });
+                    }
+                }
+            }
+
+            try {
+                // Send to Google Sheets
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('salesForm').reset();
+                document.getElementById('visitDate').valueAsDate = new Date();
+                document.getElementById('hotelsSection').classList.add('hidden');
+                document.getElementById('hotelsList').innerHTML = '';
+                hotelCount = 0;
+
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง';
+                errorMsg.style.display = 'block';
+                
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
